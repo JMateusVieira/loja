@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Venda')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title mb-4"
+                        th:text="${venda.id} == null ? 'Nova Venda' : 'Editar Venda'"></h3>
+
+                    <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+                    <form th:action="@{/vendas/salvar}" th:object="${venda}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <div class="mb-3">
+                            <label for="cliente" class="form-label">Cliente</label>
+                            <!-- Note que usamos name="cliente.id" em vez de th:field para evitar erros de conversão -->
+                            <select id="cliente" name="cliente.id" class="form-select" required>
+                                <option value="">-- Selecione um cliente --</option>
+                                <option th:each="c : ${clientes}"
+                                    th:value="${c.id}"
+                                    th:text="${c.nome}"
+                                    th:selected="${venda.cliente != null and venda.cliente.id == c.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="camisas" class="form-label">
+                                Camisas <small class="text-muted">(use Ctrl para selecionar várias)</small>
+                            </label>
+                            <select id="camisas" name="camisaIds" class="form-select" multiple size="6">
+                                <option th:each="cam : ${camisas}"
+                                        th:value="${cam.id}"
+                                        th:text="${cam.modelo} + ' — R$ ' + ${#numbers.formatDecimal(cam.preco, 1, 2)}"
+                                        th:selected="${camisaIdsSelecionadas != null and camisaIdsSelecionadas.contains(cam.id)}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-check-lg"></i> Salvar
+                        </button>
+                        <a th:href="@{/vendas}" class="btn btn-secondary">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

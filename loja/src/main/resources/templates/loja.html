@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Gerenciar Loja')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold"><i class="bi bi-shop"></i> Painel da Loja</h1>
+        <p class="lead text-muted">Gerencie o catálogo de produtos e as marcas disponíveis.</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <!-- Card Gerenciar Marcas -->
+        <div class="col-md-5">
+            <div class="card h-100 shadow-sm border-0 text-center p-4">
+                <i class="bi bi-tags text-primary mb-3" style="font-size: 4rem;"></i>
+                <h3 class="card-title">Marcas</h3>
+                <p class="card-text text-muted">Cadastre as marcas que fornecem as roupas para a loja.</p>
+                <a th:href="@{/marcas}" class="btn btn-primary btn-lg mt-auto">Gerenciar Marcas</a>
+            </div>
+        </div>
+        <!-- Card Gerenciar Camisas -->
+        <div class="col-md-5">
+            <div class="card h-100 shadow-sm border-0 text-center p-4">
+                <i class="bi bi-bag text-success mb-3" style="font-size: 4rem;"></i>
+                <h3 class="card-title">Roupas</h3>
+                <p class="card-text text-muted">Adicione, edite ou remova as camisas do seu catálogo.</p>
+                <a th:href="@{/camisas}" class="btn btn-success btn-lg mt-auto">Gerenciar Roupas</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Camisas')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <!-- Cabeçalho da página -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-bag"></i> Camisas</h2>
+        <a th:href="@{/camisas/novo}" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Nova Camisa
+        </a>
+    </div>
+
+    <!-- Grid de Cards -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+        
+        <!-- O th:each agora fica na coluna -->
+        <div class="col" th:each="camisa : ${camisas}">
+            <div class="card h-100 shadow-sm border-0">
+                <!-- Topo do Card com ícone -->
+                <div class="card-body text-center">
+                    <i class="bi bi-tag text-success" style="font-size: 3rem;"></i>
+                    <h5 class="card-title mt-3 fw-bold" th:text="${camisa.modelo}">Modelo da Camisa</h5>
+                    
+                    <h6 class="text-muted mb-3">
+                        <span class="badge bg-secondary" th:text="${camisa.marca.nome}">Marca</span>
+                    </h6>
+                    
+                    <p class="card-text fs-4 text-success fw-bold" 
+                       th:text="'R$ ' + ${#numbers.formatDecimal(camisa.preco, 1, 2)}">
+                       R$ 0,00
+                    </p>
+                    <small class="text-muted" th:text="'ID: ' + ${camisa.id}">ID: 1</small>
+                </div>
+                
+                <!-- Rodapé do Card com os botões -->
+                <div class="card-footer bg-white border-top-0 d-flex justify-content-between pb-3">
+                    <a th:href="@{/camisas/editar/{id}(id=${camisa.id})}" class="btn btn-sm btn-outline-primary w-50 me-1">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a th:href="@{/camisas/excluir/{id}(id=${camisa.id})}"
+                       class="btn btn-sm btn-outline-danger w-50 ms-1"
+                       onclick="return confirm('Excluir esta camisa?')">
+                        <i class="bi bi-trash"></i> Excluir
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensagem caso não haja nenhuma camisa cadastrada -->
+    <div th:if="${#lists.isEmpty(camisas)}" class="alert alert-info text-center mt-4" role="alert">
+        Nenhuma camisa cadastrada ainda. <a th:href="@{/camisas/novo}" class="alert-link">Clique aqui para adicionar a primeira!</a>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>
