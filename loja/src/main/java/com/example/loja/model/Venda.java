@@ -26,7 +26,6 @@ public class Venda {
     )
     private Set<Camisa> camisas = new HashSet<>();
 
-    // Processamento automático: calcula o total da venda
     public BigDecimal getTotal() {
         return camisas.stream()
                 .map(Camisa::getPreco)

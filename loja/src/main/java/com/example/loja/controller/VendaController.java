@@ -33,13 +33,11 @@ public class VendaController {
         return "vendas/listar";
     }
 
-    // MÉTODO ATUALIZADO PARA RECEBER O CAMISA ID DA HOME
     @GetMapping("/novo")
     public String mostrarFormularioNovaVenda(@RequestParam(value = "camisaId", required = false) Long camisaId, Model model) {
         Venda venda = new Venda();
         List<Long> camisaIdsSelecionadas = new ArrayList<>();
 
-        // Se o usuário clicou em "Comprar" na Home
         if (camisaId != null) {
             Camisa camisa = camisaRepository.findById(camisaId).orElse(null);
             if (camisa != null) {
@@ -61,13 +59,11 @@ public class VendaController {
                               @RequestParam(value = "camisaIds", required = false) List<Long> camisaIds,
                               Model model) {
         
-        // 1. Correção de segurança para o Cliente (evita erros do Hibernate)
         if (venda.getCliente() != null && venda.getCliente().getId() != null) {
             Cliente clienteCompleto = clienteRepository.findById(venda.getCliente().getId()).orElse(null);
             venda.setCliente(clienteCompleto);
         }
 
-        // 2. Validação: precisa ter pelo menos uma camisa
         if (camisaIds == null || camisaIds.isEmpty()) {
             model.addAttribute("clientes", clienteRepository.findAll());
             model.addAttribute("camisas", camisaRepository.findAll());
@@ -75,7 +71,6 @@ public class VendaController {
             return "vendas/form";
         }
 
-        // 3. Limpa a lista antiga (importante para o caso de Edição) e adiciona as novas
         venda.getCamisas().clear();
         for (Long id : camisaIds) {
             Camisa camisa = camisaRepository.findById(id).orElse(null);
@@ -93,7 +88,6 @@ public class VendaController {
         Venda venda = vendaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         
-        // Prepara os IDs das camisas para marcar no <select multiple>
         List<Long> camisaIdsSelecionadas = new ArrayList<>();
         for (Camisa c : venda.getCamisas()) {
             camisaIdsSelecionadas.add(c.getId());

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal; // Melhor para valores monetários
+import java.math.BigDecimal;
 
 @Entity
 public class Camisa {

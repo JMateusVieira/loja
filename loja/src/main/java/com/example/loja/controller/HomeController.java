@@ -14,12 +14,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        // Passa a lista de camisas para a página inicial
         model.addAttribute("camisas", camisaRepository.findAll());
         return "index";
     }
     
-    // Nova rota para a página de administração da Loja
     @GetMapping("/loja")
     public String loja() {
         return "loja";

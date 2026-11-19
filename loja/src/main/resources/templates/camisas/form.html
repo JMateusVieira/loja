@@ -19,8 +19,7 @@
                             <label for="modelo" class="form-label">Modelo</label>
                             <input type="text" id="modelo" class="form-control"
                                    th:field="*{modelo}"
-                                   th:classappend="${#fields.hasErrors('modelo')} ? 'is-invalid'"
-                                   placeholder="Ex: Camisa Polo Branca"/>
+                                   th:classappend="${#fields.hasErrors('modelo')} ? 'is-invalid'"/>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('modelo')}"
                                  th:errors="*{modelo}"></div>
                         </div>
@@ -40,7 +39,7 @@
                             <select id="marca" class="form-select"
                                     th:field="*{marca.id}"
                                     th:classappend="${#fields.hasErrors('marca')} ? 'is-invalid'">
-                                <option value="">-- Selecione uma marca --</option>
+                                <option value="">Marcas</option>
                                 <option th:each="m : ${marcas}"
                                         th:value="${m.id}"
                                         th:text="${m.nome}"></option>
